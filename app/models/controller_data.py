@@ -12,6 +12,6 @@ controller_data = Table('controller_data', metadata,
                         Column('charge', Integer()),
                         Column('relay', Integer()),
                         Column('vch', Integer()),
-                        Column('data_datetime', DateTime(), default=datetime.now()),
+                        Column('data_datetime', DateTime(), default=datetime.utcnow()),
                         Column('controller_id', Integer(), ForeignKey(controllers.c.id))
                         )

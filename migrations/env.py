@@ -7,7 +7,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from app.models import users, controllers, controller_data, background_task_data, database
+from app.models import users, controllers, controller_data, database
 
 sys.path.append(os.getcwd())
 
@@ -30,7 +30,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = [users.metadata, controllers.metadata, controller_data.metadata, background_task_data.metadata]
+target_metadata = [users.metadata, controllers.metadata, controller_data.metadata]
 
 
 # other values from the config, defined by the needs of env.py,

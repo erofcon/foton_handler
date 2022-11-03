@@ -1,15 +1,43 @@
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler import events
+from apscheduler.events import SchedulerEvent
+
 from .backgraund_request import foton_request_task
 
 
-def scheduler_listener(event: events):
+def scheduler_listener(event: SchedulerEvent):
     if event.code == events.EVENT_SCHEDULER_START:
         print('start')
 
+    if event.code == events.EVENT_SCHEDULER_SHUTDOWN:
+        print('shutdown')
 
-def foton_task_start():
+    if event.code == events.EVENT_SCHEDULER_PAUSED:
+        print('pause')
+
+    if event.code == events.EVENT_SCHEDULER_RESUMED:
+        print('resumed')
+
+
+class SchedularService:
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(foton_request_task, trigger='interval', seconds=3)
-    scheduler.add_listener(scheduler_listener)
-    scheduler.start()
+
+    def foton_task_start(self):
+        self.scheduler.add_job(foton_request_task, trigger='interval', seconds=30)
+        self.scheduler.add_listener(scheduler_listener)
+        self.scheduler.start()
+
+    def foton_task_shutdown(self):
+        self.scheduler.shutdown()
+
+    def foton_task_pause(self):
+        self.scheduler.pause()
+
+    def foton_task_resume(self):
+        self.scheduler.resume()
+
+    def task_check_status(self):
+        return self.scheduler.state
+
+
+schedular = SchedularService()
