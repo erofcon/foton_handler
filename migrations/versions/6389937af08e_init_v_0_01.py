@@ -1,8 +1,8 @@
-"""v 0.01
+"""init v 0.01
 
-Revision ID: dfaa688b18d2
+Revision ID: 6389937af08e
 Revises: 
-Create Date: 2022-10-31 15:27:08.058275
+Create Date: 2022-11-10 16:48:46.505947
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dfaa688b18d2'
+revision = '6389937af08e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,19 +28,27 @@ def upgrade() -> None:
     )
     op.create_table('controllers',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('controller_address', sa.String(length=20), nullable=True),
-    sa.Column('login', sa.String(length=20), nullable=True),
-    sa.Column('password', sa.String(length=20), nullable=True),
+    sa.Column('controller_address', sa.String(), nullable=True),
+    sa.Column('login', sa.String(), nullable=True),
+    sa.Column('password', sa.String(), nullable=True),
+    sa.Column('create_date_time', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('controller_data',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('vin', sa.Integer(), nullable=True),
     sa.Column('vout', sa.Integer(), nullable=True),
     sa.Column('temp', sa.Integer(), nullable=True),
     sa.Column('charge', sa.Integer(), nullable=True),
     sa.Column('relay', sa.Integer(), nullable=True),
-    sa.Column('vch', sa.Integer(), nullable=True),
-    sa.Column('data_datetime', sa.DateTime(), nullable=True),
+    sa.Column('year', sa.Integer(), nullable=True),
+    sa.Column('month', sa.Integer(), nullable=True),
+    sa.Column('date', sa.Integer(), nullable=True),
+    sa.Column('hour', sa.Integer(), nullable=True),
+    sa.Column('min', sa.Integer(), nullable=True),
+    sa.Column('sec', sa.Integer(), nullable=True),
+    sa.Column('status', sa.Boolean(), nullable=True),
+    sa.Column('create_data_datetime', sa.DateTime(), nullable=True),
     sa.Column('controller_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['controller_id'], ['controllers.id'], ),
     sa.PrimaryKeyConstraint('id')

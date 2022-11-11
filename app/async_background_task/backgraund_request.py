@@ -1,37 +1,63 @@
 from datetime import datetime
 import asyncio
 
-from httpx import AsyncClient, HTTPError
+from httpx import AsyncClient, HTTPError, BasicAuth
 
 from app.models.database import database
 from app.models import controller_data as controller_data_model
 from app.crud import controllers as controllers_crud
 
 
-async def get_controller_data(session: AsyncClient, url: str, controller_id: int):
+async def get_controller_data(session: AsyncClient, url: str, login: str, password: str, controller_id: int):
     try:
-        response = await session.get(url=url)
+        response = await session.get(url=url, auth=BasicAuth(username=login, password=password), timeout=10.0)
         response.raise_for_status()
 
         if response.status_code == 200:
             controller_data = response.json()
 
             query = controller_data_model.controller_data.insert().values(
-                vout=12,
-                temp=30,
-                charge=12,
-                relay=42,
-                vch=64,
-                data_datetime=datetime.utcnow(),
-                controller_id=controller_id
+
+                vin=controller_data['vin'],
+                vout=controller_data['vout'],
+                temp=controller_data['temp'],
+                charge=controller_data['charge'],
+                relay=controller_data['relay'],
+                year=controller_data['year'],
+                month=controller_data['month'],
+                date=controller_data['date'],
+                hour=controller_data['hour'],
+                min=controller_data['min'],
+                sec=controller_data['sec'],
+                status=True,
+                create_data_datetime=datetime.now(),
+                controller_id=controller_id,
             )
 
             await database.execute(query=query)
-
-            print(controller_data['name'], ' ', controller_id)
+            print(f"Success {url}, {datetime.now()}")
 
     except HTTPError as exc:
-        print(f"Error while requesting {exc.request.url!r}.")
+        query = controller_data_model.controller_data.insert().values(
+
+            vin=0,
+            vout=0,
+            temp=0,
+            charge=0,
+            relay=0,
+            year=0,
+            month=0,
+            date=0,
+            hour=0,
+            min=0,
+            sec=0,
+            status=False,
+            create_data_datetime=datetime.now(),
+            controller_id=controller_id,
+        )
+        await database.execute(query=query)
+
+        print(f"Error while requesting {exc.request.url!r}, {datetime.now()}")
 
 
 async def foton_request_task():
@@ -40,8 +66,10 @@ async def foton_request_task():
         controllers = await controllers_crud.get_all_controllers()
         tasks = []
         for i in range(len(controllers)):
-            url = f'https://pokeapi.co/api/v2/pokemon/{controllers[i].id}'
+            url = f'http://{controllers[i].controller_address}/data.json'
             tasks.append(
-                asyncio.ensure_future(get_controller_data(session=client, url=url, controller_id=controllers[i].id)))
+                asyncio.ensure_future(get_controller_data(session=client, url=url,
+                                                          login=controllers[i].login, password=controllers[i].password,
+                                                          controller_id=controllers[i].id)))
 
         await asyncio.gather(*tasks)

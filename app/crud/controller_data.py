@@ -23,15 +23,7 @@ async def get_last_controller_data(controller_id: int) -> controller_data_schema
 
 
 async def create_controller_data(data: controller_data_schemas.ControllerDataCreate) -> bool:
-    query = controller_data_model.controller_data.insert().values(
-        vout=data.vout,
-        temp=data.temp,
-        charge=data.charge,
-        relay=data.relay,
-        vch=data.vch,
-        data_datetime=datetime.utcnow(),
-        controller_id=data.controller_id
-    )
+    query = controller_data_model.controller_data.insert().values(*data)
 
     try:
         return await database.execute(query=query)

@@ -1,3 +1,4 @@
+from sqlalchemy import text
 from asyncpg.exceptions import IntegrityConstraintViolationError
 
 from app.models.database import database
@@ -17,7 +18,22 @@ async def create_controller(controller: controllers_schemas.ControllerCreate) ->
         return False
 
 
-async def get_all_controllers() -> list[controllers_schemas.Controllers]:
+async def get_all_controllers():
     query = controllers_model.controllers.select()
+
+    return await database.fetch_all(query=query)
+
+
+async def get_all_controllers_custom():
+    query = text("""SELECT  c.id, c.controller_address, cd.status
+                    FROM    controllers c LEFT JOIN
+                    (
+                        SELECT  controller_id,
+                        MAX(create_data_datetime) MaxDate
+                        FROM  controller_data
+                        GROUP BY controller_id
+                    ) MaxDates ON c.id = MaxDates.controller_id LEFT JOIN
+                    controller_data cd ON MaxDates.controller_id = cd.controller_id
+                    AND MaxDates.MaxDate = cd.create_data_datetime""")
 
     return await database.fetch_all(query=query)

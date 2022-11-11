@@ -23,7 +23,7 @@ class SchedularService:
     scheduler = AsyncIOScheduler()
 
     def foton_task_start(self):
-        self.scheduler.add_job(foton_request_task, trigger='interval', seconds=30)
+        self.scheduler.add_job(foton_request_task, trigger='interval', minutes=10)
         self.scheduler.add_listener(scheduler_listener)
         self.scheduler.start()
 

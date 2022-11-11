@@ -3,12 +3,11 @@ from pydantic import BaseModel
 
 class ControllersBase(BaseModel):
     controller_address: str
-    login: str
-    password: str
 
 
 class ControllerCreate(ControllersBase):
-    pass
+    login: str
+    password: str
 
 
 class Controllers(ControllersBase):
@@ -16,3 +15,7 @@ class Controllers(ControllersBase):
 
     class Config:
         orm_mode = True
+
+
+class ControllersWithControllerData(Controllers):
+    status: bool | None

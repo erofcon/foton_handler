@@ -3,11 +3,19 @@ from pydantic import BaseModel
 
 
 class ControllerDataBase(BaseModel):
+    vin: int
     vout: int
     temp: int
     charge: int
     relay: int
-    vch: int
+    year: int
+    month: int
+    date: int
+    hour: int
+    min: int
+    sec: int
+    status: bool
+    data_datetime: datetime
     controller_id: int
 
 
@@ -17,7 +25,6 @@ class ControllerDataCreate(ControllerDataBase):
 
 class ControllerData(ControllerDataBase):
     id: int
-    data_datetime: datetime
 
     class Config:
         orm_mode = True

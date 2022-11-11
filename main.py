@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
 
 from app.models.database import database
 from app.routers.background_task import router as background_task_router
@@ -27,45 +26,3 @@ async def startup():
 @app.on_event('shutdown')
 async def shutdown():
     await database.disconnect()
-
-
-# TEST
-
-html = """
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Chat</title>
-    </head>
-    <body>
-        <h1>WebSocket Chat</h1>
-        <form action="" onsubmit="sendMessage(event)">
-            <input type="text" id="messageText" autocomplete="off"/>
-            <button>Send</button>
-        </form>
-        <ul id='messages'>
-        </ul>
-        <script>
-            var ws = new WebSocket("ws://localhost:8000/ws");
-            ws.onmessage = function(event) {
-                var messages = document.getElementById('messages')
-                var message = document.createElement('li')
-                var content = document.createTextNode(event.data)
-                message.appendChild(content)
-                messages.appendChild(message)
-            };
-            function sendMessage(event) {
-                var input = document.getElementById("messageText")
-                ws.send(input.value)
-                input.value = ''
-                event.preventDefault()
-            }
-        </script>
-    </body>
-</html>
-"""
-
-
-@app.get("/")
-async def get():
-    return HTMLResponse(html)
