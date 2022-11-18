@@ -25,7 +25,7 @@ async def get_all_controllers():
 
 
 async def get_all_controllers_custom():
-    query = text("""SELECT  c.id, c.controller_address, cd.status
+    query = text("""SELECT  c.id, c.controller_address, cd.status, cd.charge
                     FROM    controllers c LEFT JOIN
                     (
                         SELECT  controller_id,
@@ -37,3 +37,19 @@ async def get_all_controllers_custom():
                     AND MaxDates.MaxDate = cd.create_data_datetime""")
 
     return await database.fetch_all(query=query)
+
+
+async def get_controllers_count() -> int:
+    query = text("""select count(id) from controllers""")
+
+    return await database.fetch_one(query=query)
+
+
+async def delete_controller(controller_id: int) -> bool:
+    try:
+        query = text(f"""DELETE FROM controllers WHERE controllers.id = {controller_id}""")
+
+        await database.execute(query=query)
+        return True
+    except Exception:
+        return False

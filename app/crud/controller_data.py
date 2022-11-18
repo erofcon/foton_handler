@@ -1,31 +1,17 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
-from asyncpg.exceptions import IntegrityConstraintViolationError
+from sqlalchemy import text
+
 from app.models.database import database
-from app.models import controller_data as controller_data_model
-from app.schemas import controller_data as controller_data_schemas
 
 
-async def get_controller_data(controller_id: int, limit: int = 10) -> controller_data_schemas.ControllerData:
-    query = controller_data_model.controller_data.select().where(
-        controller_data_model.controller_data.c.controller_id == controller_id
-    ).limit(limit=limit)
+async def get_controller_data_between_two_datetime(controller_id: int, start_datetime: datetime,
+                                                   end_datetime: datetime):
+    query = text(
+        f"""SELECT vin, vout, temp, charge, relay, status, create_data_datetime
+                FROM controller_data 
+                WHERE controller_id={controller_id} and create_data_datetime >= '{start_datetime.date()}'
+                AND create_data_datetime < '{(end_datetime + timedelta(days=1)).date()}' order by create_data_datetime
+        """)
 
     return await database.fetch_all(query=query)
-
-
-async def get_last_controller_data(controller_id: int) -> controller_data_schemas.ControllerData:
-    query = controller_data_model.controller_data.select().where(
-        controller_data_model.controller_data.c.controller_id == controller_id).order_by(
-        controller_data_model.controller_data.c.id.desc())
-
-    return await database.fetch_one(query=query)
-
-
-async def create_controller_data(data: controller_data_schemas.ControllerDataCreate) -> bool:
-    query = controller_data_model.controller_data.insert().values(*data)
-
-    try:
-        return await database.execute(query=query)
-    except IntegrityConstraintViolationError:
-        return False

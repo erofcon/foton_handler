@@ -20,5 +20,5 @@ controller_data = Table('controller_data', metadata,
                         Column('sec', Integer()),
                         Column('status', Boolean(), default=False),
                         Column('create_data_datetime', DateTime(), default=datetime.utcnow()),
-                        Column('controller_id', Integer(), ForeignKey(controllers.c.id))
+                        Column('controller_id', Integer(), ForeignKey(controllers.c.id, ondelete='CASCADE'))
                         )

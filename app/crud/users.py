@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from jose import jwt
 from asyncpg.exceptions import IntegrityConstraintViolationError
+from sqlalchemy import text
 
 from app.models.database import database
 from app.crud import token as token_crud
@@ -22,7 +23,7 @@ def _get_password_hash(password: str):
     return pwd_context.hash(secret=password)
 
 
-async def _get_user_by_name(username: str) -> users_schemas.CreateUsers | None:
+async def get_user_by_name(username: str) -> users_schemas.CreateUsers | None:
     query = users_model.users.select().where(users_model.users.c.username == username)
     return await database.fetch_one(query=query)
 
@@ -67,21 +68,21 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> users_schemas
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    user = await _get_user_by_name(username=token_data.username)
+    user = await get_user_by_name(username=token_data.username)
     if user is None:
         raise credentials_exception
 
     return user
 
 
-async def get_all_users(limit: int = 10) -> list[users_schemas.UsersBase] | list:
-    query = users_model.users.select().limit(limit=limit)
+async def get_all_users(current_user: str) -> list[users_schemas.UsersBase] | list:
+    query = users_model.users.select().where(users_model.users.c.username != current_user)
 
     return await database.fetch_all(query=query)
 
 
 async def authenticate_user(username: str, password: str) -> users_schemas.UsersBase | None:
-    user = await _get_user_by_name(username=username)
+    user = await get_user_by_name(username=username)
 
     if not user:
         return None
@@ -90,3 +91,13 @@ async def authenticate_user(username: str, password: str) -> users_schemas.Users
         return None
 
     return user
+
+
+async def delete_user(user_id: int) -> bool:
+    try:
+        query = text(f"""DELETE FROM users WHERE users.id = {user_id}""")
+
+        await database.execute(query=query)
+        return True
+    except Exception:
+        return False

@@ -9,59 +9,62 @@ from app.crud import controllers as controllers_crud
 
 
 async def get_controller_data(session: AsyncClient, url: str, login: str, password: str, controller_id: int):
-    try:
-        response = await session.get(url=url, auth=BasicAuth(username=login, password=password), timeout=10.0)
-        response.raise_for_status()
+    for i in range(5):
+        try:
+            response = await session.get(url=url, auth=BasicAuth(username=login, password=password), timeout=10.0)
+            response.raise_for_status()
 
-        if response.status_code == 200:
-            controller_data = response.json()
+            if response.status_code == 200:
+                controller_data = response.json()
 
-            query = controller_data_model.controller_data.insert().values(
+                query = controller_data_model.controller_data.insert().values(
 
-                vin=controller_data['vin'],
-                vout=controller_data['vout'],
-                temp=controller_data['temp'],
-                charge=controller_data['charge'],
-                relay=controller_data['relay'],
-                year=controller_data['year'],
-                month=controller_data['month'],
-                date=controller_data['date'],
-                hour=controller_data['hour'],
-                min=controller_data['min'],
-                sec=controller_data['sec'],
-                status=True,
-                create_data_datetime=datetime.now(),
-                controller_id=controller_id,
-            )
+                    vin=controller_data['vin'],
+                    vout=controller_data['vout'],
+                    temp=controller_data['temp'],
+                    charge=controller_data['charge'],
+                    relay=controller_data['relay'],
+                    year=controller_data['year'],
+                    month=controller_data['month'],
+                    date=controller_data['date'],
+                    hour=controller_data['hour'],
+                    min=controller_data['min'],
+                    sec=controller_data['sec'],
+                    status=True,
+                    create_data_datetime=datetime.now(),
+                    controller_id=controller_id,
+                )
 
-            await database.execute(query=query)
-            print(f"Success {url}, {datetime.now()}")
+                await database.execute(query=query)
+                print(f'{url} - successful addition to the database {datetime.now()}')
+                return
 
-    except HTTPError as exc:
-        query = controller_data_model.controller_data.insert().values(
+        except HTTPError as exc:
+            if i == 4:
+                query = controller_data_model.controller_data.insert().values(
 
-            vin=0,
-            vout=0,
-            temp=0,
-            charge=0,
-            relay=0,
-            year=0,
-            month=0,
-            date=0,
-            hour=0,
-            min=0,
-            sec=0,
-            status=False,
-            create_data_datetime=datetime.now(),
-            controller_id=controller_id,
-        )
-        await database.execute(query=query)
-
-        print(f"Error while requesting {exc.request.url!r}, {datetime.now()}")
+                    vin=0,
+                    vout=0,
+                    temp=0,
+                    charge=0,
+                    relay=0,
+                    year=0,
+                    month=0,
+                    date=0,
+                    hour=0,
+                    min=0,
+                    sec=0,
+                    status=False,
+                    create_data_datetime=datetime.now(),
+                    controller_id=controller_id,
+                )
+                await database.execute(query=query)
+            print(f'{url} - error while requesting {exc.request.url!r} repeat {i + 1} {datetime.now()}')
 
 
 async def foton_request_task():
-    print("____ new _____")
+    print(f'new asynchronous task {datetime.now()}')
+
     async with AsyncClient() as client:
         controllers = await controllers_crud.get_all_controllers()
         tasks = []

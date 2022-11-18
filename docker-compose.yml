@@ -8,8 +8,13 @@ services:
       POSTGRES_DB: 'foton_db'
       POSTGRES_USER: 'foton_user'
       POSTGRES_PASSWORD: 'qwerty123'
+      PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - '5432:5432'
+
+    volumes:
+      - ../2. Init Database:/docker-entrypoint-initdb.d
+      - .:/var/lib/postgresql/data
 
   adminer:
     image: adminer

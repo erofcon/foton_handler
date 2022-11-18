@@ -19,3 +19,8 @@ class Controllers(ControllersBase):
 
 class ControllersWithControllerData(Controllers):
     status: bool | None
+    charge: int | None
+
+
+class CountControllers(BaseModel):
+    count: int
