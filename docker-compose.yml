@@ -1,4 +1,4 @@
-version: '3.1'
+version: '2.4'
 
 services:
 
@@ -25,17 +25,17 @@ services:
       dockerfile: Dockerfile
 
     environment:
+      TZ: "Europe/Moscow"
       DB_HOST: postgresql_db
 
     depends_on:
       - postgresql_db
 
-    restart: on-failure
-
 
   postgresql_db:
     image: postgres:11.17-alpine
     environment:
+      TZ: "Europe/Moscow"
       POSTGRES_DB: 'foton_db'
       POSTGRES_USER: 'foton_user'
       POSTGRES_PASSWORD: 'qwerty123'
