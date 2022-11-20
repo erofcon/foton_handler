@@ -2,7 +2,38 @@ version: '3.1'
 
 services:
 
-  db:
+  nginx_server:
+    container_name: "nginx_server"
+    image: nginx:alpine
+    depends_on:
+      - foton_backend
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+    restart: always
+
+
+  foton_backend:
+    container_name: "foton_backend"
+    image: foton_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    environment:
+      DB_HOST: postgresql_db
+
+    depends_on:
+      - postgresql_db
+
+    restart: on-failure
+
+
+  postgresql_db:
     image: postgres:11.17-alpine
     environment:
       POSTGRES_DB: 'foton_db'
@@ -11,6 +42,8 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - '5432:5432'
+
+    restart: always
 
     volumes:
       - ../2. Init Database:/docker-entrypoint-initdb.d
@@ -22,5 +55,5 @@ services:
       - '8080:8080'
 
     depends_on:
-      - db
+      - postgresql_db
 
