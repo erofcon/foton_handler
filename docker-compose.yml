@@ -10,7 +10,7 @@ services:
       - foton_handler_backend
 
     ports:
-      - "80:80"
+      - "2082:80"
 
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
