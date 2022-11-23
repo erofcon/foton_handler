@@ -19,7 +19,7 @@ services:
   foton_handler_backend:
     container_name: "foton_handler_backend"
     image: foton_handler_backend
-    restart: on-failure
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
