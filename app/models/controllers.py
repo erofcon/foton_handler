@@ -6,8 +6,9 @@ metadata = MetaData()
 
 controllers = Table('controllers', metadata,
                     Column('id', Integer(), primary_key=True),
+                    Column('local_address', String()),
                     Column('controller_address', String()),
                     Column('login', String()),
                     Column('password', String()),
-                    Column('create_date_time', DateTime(), default=datetime.utcnow())
+                    Column('create_date_time', DateTime(), default=datetime.utcnow()),
                     )

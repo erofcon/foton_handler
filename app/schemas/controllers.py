@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class ControllersBase(BaseModel):
     controller_address: str
+    local_address: str
 
 
 class ControllerCreate(ControllersBase):
