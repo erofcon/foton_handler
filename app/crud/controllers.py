@@ -45,6 +45,12 @@ async def get_all_controllers_custom():
     return await database.fetch_all(query=query)
 
 
+async def get_all_controllers() -> list[controllers_schemas.Controllers]:
+    query = controllers_model.controllers.select()
+
+    return await database.fetch_all(query=query)
+
+
 async def get_controllers_count() -> int:
     query = text("""select count(id) from controllers""")
 

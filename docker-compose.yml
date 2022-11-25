@@ -2,36 +2,36 @@ version: "3.9"
 
 services:
 
-#  nginx_server:
-#    container_name: "nginx_server"
-#    restart: always
-#    image: nginx:alpine
-#    depends_on:
-#      - foton_handler_backend
-#
-#    ports:
-#      - "2082:80"
-#
-#    volumes:
-#      - ./nginx/conf.d:/etc/nginx/conf.d
-#
-#
-#  foton_handler_backend:
-#    container_name: "foton_handler_backend"
-#    image: foton_handler_backend
-#    restart: always
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#
-#    command: bash -c 'while ! nc -z postgresql_db 5432; do sleep 1; done; alembic upgrade head; uvicorn main:app --host 0.0.0.0'
-#
-#    environment:
-#      TZ: Europe/Moscow
-#      DB_HOST: postgresql_db
-#
-#    depends_on:
-#      - postgresql_db
+  nginx_server:
+    container_name: "nginx_server"
+    restart: always
+    image: nginx:alpine
+    depends_on:
+      - foton_handler_backend
+
+    ports:
+      - "2082:80"
+
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+
+  foton_handler_backend:
+    container_name: "foton_handler_backend"
+    image: foton_handler_backend
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    command: bash -c 'while ! nc -z postgresql_db 5432; do sleep 1; done; alembic upgrade head; uvicorn main:app --host 0.0.0.0'
+
+    environment:
+      TZ: Europe/Moscow
+      DB_HOST: postgresql_db
+
+    depends_on:
+      - postgresql_db
 
   postgresql_db:
     container_name: "postgresql_db"
