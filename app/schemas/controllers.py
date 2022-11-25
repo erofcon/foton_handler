@@ -2,13 +2,17 @@ from pydantic import BaseModel
 
 
 class ControllersBase(BaseModel):
-    controller_address: str
-    local_address: str
+    controller_address: str | None
+    local_address: str | None
 
 
 class ControllerCreate(ControllersBase):
     login: str
     password: str
+
+
+class ControllerUpdate(ControllerCreate):
+    id: int
 
 
 class Controllers(ControllersBase):

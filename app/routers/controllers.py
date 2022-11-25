@@ -11,6 +11,7 @@ router = APIRouter()
 @router.post('/create_controller')
 async def create_controller(controller: controllers_schemas.ControllerCreate,
                             current_user: users_schemas.UsersBase = Depends(users_crud.get_current_user)):
+    print(controller)
     if not current_user.is_super_user:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Permission denied')
 
@@ -40,3 +41,24 @@ async def delete_controller(controller_id: int,
         return HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
     return HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+
+@router.post('/update_controller')
+async def get_controllers_count(controller: controllers_schemas.ControllerUpdate,
+                                current_user: users_schemas.UsersBase = Depends(users_crud.get_current_user)):
+    if not current_user.is_super_user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Permission denied')
+
+    if await controllers_crud.update_controller(controller=controller):
+        return HTTPException(status_code=status.HTTP_200_OK)
+
+    return HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+
+@router.get('/get_controller_edit_data')
+async def delete_controller(controller_id: int,
+                            current_user: users_schemas.UsersBase = Depends(users_crud.get_current_user)):
+    if not current_user.is_super_user:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Permission denied')
+
+    return await controllers_crud.get_controller_edit_data(controller_id=controller_id)

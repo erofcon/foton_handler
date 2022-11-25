@@ -1,4 +1,6 @@
-from sqlalchemy import text
+from datetime import datetime
+
+from sqlalchemy import text, update
 from asyncpg.exceptions import IntegrityConstraintViolationError
 
 from app.models.database import database
@@ -8,9 +10,11 @@ from app.schemas import controllers as controllers_schemas
 
 async def create_controller(controller: controllers_schemas.ControllerCreate) -> bool:
     query = controllers_model.controllers.insert().values(
+        local_address=controller.local_address,
         controller_address=controller.controller_address,
         login=controller.login,
-        password=controller.password
+        password=controller.password,
+        create_date_time=datetime.now(),
     )
     try:
         return await database.execute(query=query)
@@ -18,14 +22,16 @@ async def create_controller(controller: controllers_schemas.ControllerCreate) ->
         return False
 
 
-async def get_all_controllers():
-    query = controllers_model.controllers.select()
+async def get_controller_edit_data(controller_id: int) -> controllers_schemas.ControllerCreate:
+    query = controllers_model.controllers.select().where(
+        controllers_model.controllers.c.id == controller_id,
+    )
 
-    return await database.fetch_all(query=query)
+    return await database.fetch_one(query=query)
 
 
 async def get_all_controllers_custom():
-    query = text("""SELECT  c.id, c.controller_address, cd.status, cd.charge
+    query = text("""SELECT  c.id, c.controller_address, c.local_address, cd.status, cd.charge
                     FROM    controllers c LEFT JOIN
                     (
                         SELECT  controller_id,
@@ -41,6 +47,20 @@ async def get_all_controllers_custom():
 
 async def get_controllers_count() -> int:
     query = text("""select count(id) from controllers""")
+
+    return await database.fetch_one(query=query)
+
+
+async def update_controller(controller: controllers_schemas.ControllerUpdate) -> bool:
+    query = update(controllers_model.controllers).where(
+        controllers_model.controllers.c.id == controller.id
+    ).values(
+        local_address=controller.local_address,
+        controller_address=controller.controller_address,
+        login=controller.login,
+        password=controller.password,
+        create_date_time=datetime.now(),
+    )
 
     return await database.fetch_one(query=query)
 
