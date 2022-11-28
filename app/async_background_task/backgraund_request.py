@@ -65,14 +65,28 @@ async def get_controller_data(session: AsyncClient, url: str, login: str, passwo
 async def foton_request_task():
     print(f'new asynchronous task {datetime.now()}')
 
-    async with AsyncClient() as client:
-        controllers = await controllers_crud.get_all_controllers()
-        tasks = []
-        for i in range(len(controllers)):
-            url = f'http://{controllers[i].controller_address}/data.json'
-            tasks.append(
-                asyncio.ensure_future(get_controller_data(session=client, url=url,
-                                                          login=controllers[i].login, password=controllers[i].password,
-                                                          controller_id=controllers[i].id)))
+    client = AsyncClient()
+    tasks = []
+    controllers = await controllers_crud.get_all_controllers()
 
-        await asyncio.gather(*tasks)
+    for i in range(len(controllers)):
+        url = f'http://{controllers[i].controller_address}/data.json'
+        tasks.append(
+            asyncio.ensure_future(get_controller_data(session=client, url=url,
+                                                      login=controllers[i].login, password=controllers[i].password,
+                                                      controller_id=controllers[i].id)))
+
+    await asyncio.gather(*tasks)
+    await client.aclose()
+
+    # async with AsyncClient() as client:
+    #     controllers = await controllers_crud.get_all_controllers()
+    #     tasks = []
+    #     for i in range(len(controllers)):
+    #         url = f'http://{controllers[i].controller_address}/data.json'
+    #         tasks.append(
+    #             asyncio.ensure_future(get_controller_data(session=client, url=url,
+    #                                                       login=controllers[i].login, password=controllers[i].password,
+    #                                                       controller_id=controllers[i].id)))
+    #
+    #     await asyncio.gather(*tasks)
