@@ -36,10 +36,9 @@ async def get_controller_data(session: AsyncClient, url: str, login: str, passwo
                 )
 
                 await database.execute(query=query)
-                print(f'{url} - successful addition to the database {datetime.now()}')
                 return
 
-        except HTTPError as exc:
+        except Exception:
             if i == 4:
                 query = controller_data_model.controller_data.insert().values(
 
@@ -59,12 +58,9 @@ async def get_controller_data(session: AsyncClient, url: str, login: str, passwo
                     controller_id=controller_id,
                 )
                 await database.execute(query=query)
-            print(f'{url} - error while requesting {exc.request.url!r} repeat {i + 1} {datetime.now()}')
 
 
 async def foton_request_task():
-    print(f'new asynchronous task {datetime.now()}')
-
     client = AsyncClient()
     tasks = []
     controllers = await controllers_crud.get_all_controllers()

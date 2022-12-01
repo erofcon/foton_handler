@@ -31,16 +31,28 @@ async def get_controller_edit_data(controller_id: int) -> controllers_schemas.Co
 
 
 async def get_all_controllers_custom():
-    query = text("""SELECT  c.id, c.controller_address, c.local_address, cd.status, cd.charge
-                    FROM    controllers c LEFT JOIN
-                    (
-                        SELECT  controller_id,
-                        MAX(create_data_datetime) MaxDate
-                        FROM  controller_data
-                        GROUP BY controller_id
-                    ) MaxDates ON c.id = MaxDates.controller_id LEFT JOIN
-                    controller_data cd ON MaxDates.controller_id = cd.controller_id
-                    AND MaxDates.MaxDate = cd.create_data_datetime""")
+    query = text("""
+                SELECT c.id, c.controller_address, c.local_address, cd.status, chr.charge
+                FROM controllers c
+                LEFT JOIN
+                ( 
+                 SELECT  controller_id,
+                 MAX(create_data_datetime) MaxDate
+                 FROM  controller_data 
+                 GROUP BY controller_id
+                ) MaxDates 
+                ON 
+                c.id = MaxDates.controller_id 
+                LEFT JOIN
+                controller_data cd 
+                ON MaxDates.controller_id = cd.controller_id AND MaxDates.MaxDate = cd.create_data_datetime
+                left JOIN LATERAL 
+                (
+                 select charge, controller_id, create_data_datetime from controller_data 
+                 WHERE charge>0 and controller_id=c.id
+                 ORDER BY create_data_datetime desc limit 1
+                ) chr on chr.controller_id=c.id
+            """)
 
     return await database.fetch_all(query=query)
 
