@@ -1,0 +1,538 @@
+[INFO  databases core:83 - connect() - 20.12.2022 10:39:32 AM]
+	 Connected to database postgres://foton_user:********@localhost:5432/foton_db 
+
+[INFO  apscheduler.scheduler base:444 - add_job() - 20.12.2022 10:39:32 AM]
+	 Adding job tentatively -- it will be properly scheduled when the scheduler starts 
+
+[INFO  apscheduler.scheduler base:885 - _real_add_job() - 20.12.2022 10:39:32 AM]
+	 Added job "foton_request_task" to job store "default" 
+
+[INFO  apscheduler.scheduler base:171 - start() - 20.12.2022 10:39:32 AM]
+	 Scheduler started 
+
+[DEBUG  apscheduler.scheduler base:944 - _process_jobs() - 20.12.2022 10:39:32 AM]
+	 Looking for jobs to run 
+
+[DEBUG  apscheduler.scheduler base:1023 - _process_jobs() - 20.12.2022 10:39:32 AM]
+	 Next wakeup is due at 2022-12-20 10:44:32.555902+03:00 (in 300.000000 seconds) 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_begin with no data 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_field with data[29:48] 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_value with data[50:76] 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_end with no data 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_headers_finished with no data 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_data with data[80:85] 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_end with no data 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_begin with no data 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_field with data[116:135] 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_value with data[137:163] 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_header_end with no data 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_headers_finished with no data 
+
+[DEBUG  multipart.multipart multipart:601 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_data with data[167:172] 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_part_end with no data 
+
+[DEBUG  multipart.multipart multipart:604 - callback() - 20.12.2022 10:39:36 AM]
+	 Calling on_end with no data 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:36 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  passlib.handlers.bcrypt bcrypt:625 - _load_backend_mixin() - 20.12.2022 10:39:36 AM]
+	 detected 'bcrypt' backend, version '4.0.1' 
+
+[DEBUG  passlib.handlers.bcrypt bcrypt:406 - _finalize_backend_mixin() - 20.12.2022 10:39:36 AM]
+	 'bcrypt' backend lacks $2$ support, enabling workaround 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:37 AM]
+	 Query:                  SELECT c.id, c.controller_address, c.local_address, cd.status, chr.charge, chr.create_data_datetime                 FROM controllers c                 LEFT JOIN                 (                  SELECT  controller_id,                  MAX(create_data_datetime) MaxDate                  FROM  controller_data                  GROUP BY controller_id                 ) MaxDates                 ON                 c.id = MaxDates.controller_id                 LEFT JOIN                 controller_data cd                 ON MaxDates.controller_id = cd.controller_id AND MaxDates.MaxDate = cd.create_data_datetime                 left JOIN LATERAL                 (                  select charge, controller_id, create_data_datetime from controller_data                  WHERE charge>0 and controller_id=c.id                  ORDER BY create_data_datetime desc limit 1                 ) chr on chr.controller_id=c.id              Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:37 AM]
+	 Query: select count(id) from controllers Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:43 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:43 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=14         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:47 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:39:47 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=14         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  apscheduler.scheduler base:944 - _process_jobs() - 20.12.2022 10:44:32 AM]
+	 Looking for jobs to run 
+
+[DEBUG  apscheduler.scheduler base:1023 - _process_jobs() - 20.12.2022 10:44:32 AM]
+	 Next wakeup is due at 2022-12-20 10:49:32.555902+03:00 (in 299.981986 seconds) 
+
+[INFO  apscheduler.executors.default base_py3:28 - run_coroutine_job() - 20.12.2022 10:44:32 AM]
+	 Running job "foton_request_task (trigger: interval[0:05:00], next run at: 2022-12-20 10:49:32 MSK)" (scheduled at 2022-12-20 10:44:32.555902+03:00) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:32 AM]
+	 Query: SELECT controllers.id, controllers.local_address, controllers.controller_address, controllers.login, controllers.password, controllers.create_date_time FROM controllers Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:37 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:37 AM]
+	 Query: select count(id) from controllers Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:44:37 AM]
+	 Query:                  SELECT c.id, c.controller_address, c.local_address, cd.status, chr.charge, chr.create_data_datetime                 FROM controllers c                 LEFT JOIN                 (                  SELECT  controller_id,                  MAX(create_data_datetime) MaxDate                  FROM  controller_data                  GROUP BY controller_id                 ) MaxDates                 ON                 c.id = MaxDates.controller_id                 LEFT JOIN                 controller_data cd                 ON MaxDates.controller_id = cd.controller_id AND MaxDates.MaxDate = cd.create_data_datetime                 left JOIN LATERAL                 (                  select charge, controller_id, create_data_datetime from controller_data                  WHERE charge>0 and controller_id=c.id                  ORDER BY create_data_datetime desc limit 1                 ) chr on chr.controller_id=c.id              Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 16, datetime.datetime(2022, 12, 20, 10, 45, 22, 656057), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 15, datetime.datetime(2022, 12, 20, 10, 45, 22, 658029), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[ERROR  apscheduler.executors.default base_py3:36 - run_coroutine_job() - 20.12.2022 10:45:22 AM]
+	 Job "foton_request_task (trigger: interval[0:05:00], next run at: 2022-12-20 10:49:32 MSK)" raised an exception 
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_sockets.py", line 213, in connect_tcp
+    async with create_task_group() as tg:
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 662, in __aexit__
+    raise exceptions[0]
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_sockets.py", line 164, in try_connect
+    stream = await asynclib.connect_tcp(remote_host, remote_port, local_address)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 1691, in connect_tcp
+    await get_running_loop().create_connection(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1052, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 963, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\selector_events.py", line 500, in sock_connect
+    return await fut
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_exceptions.py", line 8, in map_exceptions
+    yield
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 108, in connect_tcp
+    with anyio.fail_after(timeout):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_tasks.py", line 118, in __exit__
+    raise TimeoutError
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection_pool.py", line 252, in handle_async_request
+    raise exc
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 107, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_exceptions.py", line 12, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 14, in get_controller_data
+    response = await session.get(url=url, auth=BasicAuth(username=login, password=password), timeout=10.0)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1757, in get
+    return await self.request(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\apscheduler\executors\base_py3.py", line 30, in run_coroutine_job
+    retval = await job.func(*job.args, **job.kwargs)
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 75, in foton_request_task
+    await asyncio.gather(*tasks)
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 60, in get_controller_data
+    await database.execute(query=query)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\core.py", line 163, in execute
+    return await connection.execute(query, values)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\core.py", line 274, in execute
+    return await self._connection.execute(built_query)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\backends\postgres.py", line 217, in execute
+    return await self._connection.fetchval(query_str, *args)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 644, in fetchval
+    data = await self._execute(query, args, 1, timeout)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1658, in _execute
+    result, _ = await self.__execute(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1683, in __execute
+    return await self._do_execute(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1730, in _do_execute
+    result = await executor(stmt, None)
+  File "asyncpg\protocol\protocol.pyx", line 201, in bind_execute
+asyncpg.exceptions.UniqueViolationError: duplicate key value violates unique constraint "controller_data_pkey"
+DETAIL:  Key (id)=(19) already exists.
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 8, datetime.datetime(2022, 12, 20, 10, 45, 22, 659032), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 12, datetime.datetime(2022, 12, 20, 10, 45, 22, 659188), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 14, datetime.datetime(2022, 12, 20, 10, 45, 22, 659188), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 7, datetime.datetime(2022, 12, 20, 10, 45, 22, 659188), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 11, datetime.datetime(2022, 12, 20, 10, 45, 22, 660223), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 3, datetime.datetime(2022, 12, 20, 10, 45, 22, 673723), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 18, datetime.datetime(2022, 12, 20, 10, 45, 22, 673723), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 9, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 13, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 2, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 1, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 10, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 4, datetime.datetime(2022, 12, 20, 10, 45, 22, 674732), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 17, datetime.datetime(2022, 12, 20, 10, 45, 22, 675723), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 6, datetime.datetime(2022, 12, 20, 10, 45, 22, 676301), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:45:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 5, datetime.datetime(2022, 12, 20, 10, 45, 22, 676301), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:12 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:12 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=14         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:16 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:16 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=13         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:23 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:23 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=14         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:28 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:28 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=12         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:29 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:29 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=12         AND create_data_datetime >= '2022-12-13'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:50 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:47:50 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=18         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:01 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:01 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=15         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:04 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:04 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=18         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:07 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:07 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=18         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:09 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:09 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=18         AND create_data_datetime >= '2022-12-13'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:21 AM]
+	 Query: SELECT users.id, users.username, users.password, users.is_super_user FROM users WHERE users.username = $1 Args: ('admin',) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:48:21 AM]
+	 Query:          SELECT id, vin, vout, temp, charge, relay, create_data_datetime         FROM controller_data         WHERE controller_id=1         AND create_data_datetime >= '2022-12-20'         AND create_data_datetime < '2022-12-21'         AND status=true         AND id%1 = 0         ORDER BY create_data_datetime          Args: () 
+
+[DEBUG  apscheduler.scheduler base:944 - _process_jobs() - 20.12.2022 10:49:32 AM]
+	 Looking for jobs to run 
+
+[DEBUG  apscheduler.scheduler base:1023 - _process_jobs() - 20.12.2022 10:49:32 AM]
+	 Next wakeup is due at 2022-12-20 10:49:32.555902+03:00 (in 0.009057 seconds) 
+
+[DEBUG  apscheduler.scheduler base:944 - _process_jobs() - 20.12.2022 10:49:32 AM]
+	 Looking for jobs to run 
+
+[DEBUG  apscheduler.scheduler base:1023 - _process_jobs() - 20.12.2022 10:49:32 AM]
+	 Next wakeup is due at 2022-12-20 10:54:32.555902+03:00 (in 299.992791 seconds) 
+
+[INFO  apscheduler.executors.default base_py3:28 - run_coroutine_job() - 20.12.2022 10:49:32 AM]
+	 Running job "foton_request_task (trigger: interval[0:05:00], next run at: 2022-12-20 10:54:32 MSK)" (scheduled at 2022-12-20 10:49:32.555902+03:00) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:49:32 AM]
+	 Query: SELECT controllers.id, controllers.local_address, controllers.controller_address, controllers.login, controllers.password, controllers.create_date_time FROM controllers Args: () 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 15, datetime.datetime(2022, 12, 20, 10, 50, 22, 617456), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 9, datetime.datetime(2022, 12, 20, 10, 50, 22, 618475), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[ERROR  apscheduler.executors.default base_py3:36 - run_coroutine_job() - 20.12.2022 10:50:22 AM]
+	 Job "foton_request_task (trigger: interval[0:05:00], next run at: 2022-12-20 10:54:32 MSK)" raised an exception 
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 109, in connect_tcp
+    stream: anyio.abc.ByteStream = await anyio.connect_tcp(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_sockets.py", line 213, in connect_tcp
+    async with create_task_group() as tg:
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 662, in __aexit__
+    raise exceptions[0]
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_sockets.py", line 164, in try_connect
+    stream = await asynclib.connect_tcp(remote_host, remote_port, local_address)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_backends\_asyncio.py", line 1691, in connect_tcp
+    await get_running_loop().create_connection(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 1052, in create_connection
+    sock = await self._connect_sock(
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 963, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\asyncio\selector_events.py", line 500, in sock_connect
+    return await fut
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_exceptions.py", line 8, in map_exceptions
+    yield
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 108, in connect_tcp
+    with anyio.fail_after(timeout):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\anyio\_core\_tasks.py", line 118, in __exit__
+    raise TimeoutError
+TimeoutError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 60, in map_httpcore_exceptions
+    yield
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 353, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection_pool.py", line 252, in handle_async_request
+    raise exc
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection_pool.py", line 236, in handle_async_request
+    response = await connection.handle_async_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 86, in handle_async_request
+    raise exc
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 63, in handle_async_request
+    stream = await self._connect(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_async\connection.py", line 111, in _connect
+    stream = await self._network_backend.connect_tcp(**kwargs)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\auto.py", line 29, in connect_tcp
+    return await self._backend.connect_tcp(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\backends\asyncio.py", line 107, in connect_tcp
+    with map_exceptions(exc_map):
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpcore\_exceptions.py", line 12, in map_exceptions
+    raise to_exc(exc)
+httpcore.ConnectTimeout
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 14, in get_controller_data
+    response = await session.get(url=url, auth=BasicAuth(username=login, password=password), timeout=10.0)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1757, in get
+    return await self.request(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1533, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1620, in send
+    response = await self._send_handling_auth(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1648, in _send_handling_auth
+    response = await self._send_handling_redirects(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1685, in _send_handling_redirects
+    response = await self._send_single_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_client.py", line 1722, in _send_single_request
+    response = await transport.handle_async_request(request)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 352, in handle_async_request
+    with map_httpcore_exceptions():
+  File "C:\Users\admin\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\httpx\_transports\default.py", line 77, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx.ConnectTimeout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\apscheduler\executors\base_py3.py", line 30, in run_coroutine_job
+    retval = await job.func(*job.args, **job.kwargs)
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 75, in foton_request_task
+    await asyncio.gather(*tasks)
+  File "C:\Users\admin\PycharmProjects\foton_handler\.\app\async_background_task\backgraund_request.py", line 60, in get_controller_data
+    await database.execute(query=query)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\core.py", line 163, in execute
+    return await connection.execute(query, values)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\core.py", line 274, in execute
+    return await self._connection.execute(built_query)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\databases\backends\postgres.py", line 217, in execute
+    return await self._connection.fetchval(query_str, *args)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 644, in fetchval
+    data = await self._execute(query, args, 1, timeout)
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1658, in _execute
+    result, _ = await self.__execute(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1683, in __execute
+    return await self._do_execute(
+  File "C:\Users\admin\PycharmProjects\foton_handler\venv\lib\site-packages\asyncpg\connection.py", line 1730, in _do_execute
+    result = await executor(stmt, None)
+  File "asyncpg\protocol\protocol.pyx", line 201, in bind_execute
+asyncpg.exceptions.UniqueViolationError: duplicate key value violates unique constraint "controller_data_pkey"
+DETAIL:  Key (id)=(37) already exists.
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 5, datetime.datetime(2022, 12, 20, 10, 50, 22, 618944), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 12, datetime.datetime(2022, 12, 20, 10, 50, 22, 618944), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 13, datetime.datetime(2022, 12, 20, 10, 50, 22, 618944), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 11, datetime.datetime(2022, 12, 20, 10, 50, 22, 618944), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 6, datetime.datetime(2022, 12, 20, 10, 50, 22, 618944), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 17, datetime.datetime(2022, 12, 20, 10, 50, 22, 619981), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 7, datetime.datetime(2022, 12, 20, 10, 50, 22, 619981), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 3, datetime.datetime(2022, 12, 20, 10, 50, 22, 621978), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 8, datetime.datetime(2022, 12, 20, 10, 50, 22, 626230), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 14, datetime.datetime(2022, 12, 20, 10, 50, 22, 626230), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 10, datetime.datetime(2022, 12, 20, 10, 50, 22, 626230), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 18, datetime.datetime(2022, 12, 20, 10, 50, 22, 627201), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 2, datetime.datetime(2022, 12, 20, 10, 50, 22, 627201), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 1, datetime.datetime(2022, 12, 20, 10, 50, 22, 627201), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 4, datetime.datetime(2022, 12, 20, 10, 50, 22, 627201), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+
+[DEBUG  databases postgres:266 - _compile() - 20.12.2022 10:50:22 AM]
+	 Query: INSERT INTO controller_data (vin, vout, temp, charge, relay, year, month, date, hour, min, sec, status, create_data_datetime, controller_id) VALUES ($12, $13, $11, $1, $8, $14, $7, $4, $5, $6, $9, $10, $3, $2) RETURNING controller_data.id Args: (0, 16, datetime.datetime(2022, 12, 20, 10, 50, 22, 628201), 0, 0, 0, 0, 0, 0, False, 0, 0, 0, 0) 
+

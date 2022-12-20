@@ -32,7 +32,7 @@ async def get_controller_edit_data(controller_id: int) -> controllers_schemas.Co
 
 async def get_all_controllers_custom():
     query = text("""
-                SELECT c.id, c.controller_address, c.local_address, cd.status, chr.charge
+                SELECT c.id, c.controller_address, c.local_address, cd.status, chr.charge, chr.create_data_datetime
                 FROM controllers c
                 LEFT JOIN
                 ( 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -25,6 +26,7 @@ class Controllers(ControllersBase):
 class ControllersWithControllerData(Controllers):
     status: bool | None
     charge: int | None
+    create_data_datetime: datetime | None
 
 
 class CountControllers(BaseModel):
